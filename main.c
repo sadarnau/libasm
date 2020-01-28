@@ -39,8 +39,8 @@ int		main(void)
 	// printf("\033[0;31m\"%s\" \"%s\"\033[0m : strcmp = \033[0;32m\%d\033[0m and ft_strcmp = \033[0;32m\%d\033[0m\n", "test1", "test", strcmp("test1", "test"), ft_strcmp("test1", "test"));	
 	// printf("\n---------------------End of ft_strcmp---------------------\n\n\n");
 
-	printf("%d\n", ft_write(1, "ab\n", 9));
-	printf("%d\n", write(1, "ab\n", 9));
+	printf("%d\n", ft_write(1, "ab\n", 3));
+	printf("%d\n", write(1, "ab\n", 3));
 
 	return (0);
 }
