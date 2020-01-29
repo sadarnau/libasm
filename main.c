@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
-
+#include <fcntl.h>
 
 # define STRLEN(x)			printf("`%s` = %d (%d)\n", x, ft_strlen(x), (int)strlen(x));
 
@@ -46,6 +46,31 @@ int		main(void)
 	printf("\033[0;31mwrite of \"%s\" in fd = 42 and byte = 10\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%d\033[0m\n\n", "abcde", write(42, "abcde", 10), ft_write(42, "abcde", 10));	
 	printf("\033[0;31mwrite of \"%s\" in fd = 1 and byte = 0\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%d\033[0m\n", "123", write(1, "123", 0), ft_write(1, "123", 0));	
 	printf("\n-------------------------End of ft_write-------------------------\n\n\n");
+
+	char bufb[27];
+	int	fd = open("readTest", O_RDONLY);
+	printf("\n----------------------------ft_read----------------------------\n\n");
+	printf("\033[0;31mread of 6 in readTest\033[0m : read = \033[0;32m\%zd\033[0m\n", read(fd, bufb, 6));	
+	printf("%s\n", bufb);
+	close(fd);
+	fd = open("readTest", O_RDONLY);
+	printf("\033[0;31mread of 6 in readTest\033[0m : ft_read = \033[0;32m\%d\033[0m\n", ft_read(fd, bufb, 6));	
+	printf("%s\n", bufb);
+	close(fd);
+	fd = open("readTest", O_RDONLY);
+	printf("\033[0;31mread of 1000 in readTest\033[0m : read = \033[0;32m\%zd\033[0m\n", read(fd, bufb, 1000));	
+	printf("%s\n", bufb);
+	close(fd);
+	fd = open("readTest", O_RDONLY);
+	printf("\033[0;31mread of 1000 in readTest\033[0m : ft_read = \033[0;32m\%d\033[0m\n", ft_read(fd, bufb, 1000));	
+	printf("%s\n", bufb);
+	close(fd);
+	printf("\033[0;31mread of 10 in fd = 42 (wrong fd)\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%d\033[0m\n", read(42, bufb, 10), ft_read(42, bufb, 10));	
+	fd = open("readTest", O_RDONLY);
+	printf("\033[0;31mread of 0 in readTest\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%d\033[0m\n", read(fd, bufb, 0), ft_read(fd, bufb, 0));		
+	printf("\n-------------------------End of ft_read-------------------------\n\n\n");
+
+
 
 	return (0);
 }
