@@ -1,46 +1,57 @@
-NAME =		libasm.a
+NAME =			libasm.a
 
-SRC_PATH =	srcs/
-SRC_NAME =	ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s
-SRC_MAIN = main.c
+# SOURCES
+SRC =			$(SRC_NAME)
+SRC_PATH =		srcs/
+SRC_NAME =		ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s \
+				ft_list_size_bonus.s
+SRC_MAIN = 		main.c
 
-HEAD_PATH =	includes
+# HEADER
+HEAD_PATH =		includes
 
-OBJS_PATH =	objs/
+# All .o (object file)
+OBJS_PATH =		objs/
+OBJS =			$(SRC:%.s=$(OBJS_PATH)%.o)
+OBJS_TEST = 	$(SRC_MAIN:%.s=$(OBJS_PATH)%.o)
 
-GCC =		gcc
-NASM =		nasm
+# Compilation
+GCC =			gcc
+NASM =			nasm
+AR = 			ar -rc
 
-AR = ar -rc
-
-GCCFLAGS =	-Werror -Wall -Wextra -g3 -fsanitize=address
+# Compilation flags
+GCCFLAGS =		-Werror -Wall -Wextra
 NASM_FLAGS =	-f macho64
 
-SRC =		$(SRC_NAME)
-OBJS =		$(SRC:%.s=$(OBJS_PATH)%.o)
-OBJS_TEST = $(SRC_MAIN:%.s=$(OBJS_PATH)%.o)
 
-all:	$(OBJS)
-		$(AR) $(NAME) $(OBJS)
+
+all:			$(OBJS)
+				$(AR) $(NAME) $(OBJS)
 
 $(NAME):	all
 
-$(OBJS_PATH)%.o: $(SRC_PATH)%.s
-		$(NASM) $(NASM_FLAGS) -I $(HEAD_PATH) -s $< -o $@
 
-$(OBJS):	$(OBJS_PATH)
+# Getting .o from .s rule
+$(OBJS_PATH)%.o: $(SRC_PATH)%.s
+				$(NASM) $(NASM_FLAGS) -I $(HEAD_PATH) -s $< -o $@
+
+$(OBJS):		$(OBJS_PATH)
 
 $(OBJS_PATH):
-		mkdir $(OBJS_PATH)
+				mkdir $(OBJS_PATH)
 
-test:		$(NAME) $(OBJS_TEST)
-			$(GCC) $(GCCFLAGS) -I $(HEAD_PATH) $(NAME) $(OBJS_TEST) -o test
+
+# Creating a testFile
+test:			all $(OBJS_TEST)
+				$(GCC) $(GCCFLAGS) -I $(HEAD_PATH) $(NAME) $(OBJS_TEST) -o test
 
 fclean:	
-			rm -rf $(OBJS_PATH) $(NAME) test
+				rm -rf $(OBJS_PATH) $(NAME) test
 
 clean:
-			rm -rf $(OBJS_PATH)
-re: fclean all
+				rm -rf $(OBJS_PATH)
 
-.PHONY: all clean fclean re
+re:				fclean all
+
+.PHONY:			all clean fclean re
