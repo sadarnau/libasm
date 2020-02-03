@@ -21,7 +21,7 @@ end:
 	sub	cl, byte [rsi + rdx]
 	cmp	cl, 0
 	jz	null
-	jg	greater					;jz = jmp if greater
+	jg	greater					;jg = jmp if greater
 	jmp	smaller
 
 null:

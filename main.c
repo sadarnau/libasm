@@ -162,6 +162,7 @@ int		main(void)
 	printf("\033[0;31m\"%s\" \"\"\033[0m : strcmp = \033[0;32m\%d\033[0m and ft_strcmp = \033[0;32m\%d\033[0m\n\n", "test", strcmp("test", ""), ft_strcmp("test", ""));
 	printf("\033[0;31m\"%s\" \"%s\"\033[0m : strcmp = \033[0;32m\%d\033[0m and ft_strcmp = \033[0;32m\%d\033[0m\n\n", "abcdef123", "abcdef23", strcmp("abcdef123", "abcdef23"), ft_strcmp("abcdef123", "abcdef23"));
 	printf("\033[0;31m\"%s\" \"%s\"\033[0m : strcmp = \033[0;32m\%d\033[0m and ft_strcmp = \033[0;32m\%d\033[0m\n\n", "test1", "test", strcmp("test1", "test"), ft_strcmp("test1", "test"));	
+	printf("\033[0;31m\"%s\" \"%s\"\033[0m : strcmp = \033[0;32m\%d\033[0m and ft_strcmp = \033[0;32m\%d\033[0m\n\n", "\xff", "\xff\xfe", strcmp("\xff", "\xff\xfe"), ft_strcmp("\xff", "\xff\xfe"));	
 	printf("\n------------------------End of ft_strcmp------------------------\n\n\n");
 
 	printf("\n----------------------------ft_write----------------------------\n\n");
@@ -248,8 +249,8 @@ int		main(void)
 	strcmp_test("beta", "");
 	strcmp_test("te\0", "\0");
 	strcmp_test("\xff", "\xff");
-	strcmp_test("\xfe", "\xfe");
-	strcmp_test("lol", "1");
+	strcmp_test("\xff", "\xff\xfe");
+	strcmp_test("\xff", "\xfe");
 	strcmp_test("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, ed pulvinar nullam.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, sed pulvinar nullam.");
 	printf("\n\n");
 
