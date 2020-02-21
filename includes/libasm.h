@@ -6,7 +6,7 @@
 /*   By: sadarnau <sadarnau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:13:52 by sadarnau          #+#    #+#             */
-/*   Updated: 2020/01/29 15:14:30 by sadarnau         ###   ########.fr       */
+/*   Updated: 2020/02/21 18:44:06 by sadarnau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+void				ft_list_push_front(t_list **begin, void *data);
 int					ft_list_size(t_list *begin_list);
 size_t				ft_strlen(const char *s);
 char				*ft_strcpy(char *dst, const char *src);

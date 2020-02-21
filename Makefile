@@ -4,7 +4,7 @@ NAME =			libasm.a
 SRC =			$(SRC_NAME)
 SRC_PATH =		srcs/
 SRC_NAME =		ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s \
-				ft_list_size_bonus.s
+				ft_list_size_bonus.s ft_list_push_front_bonus.s
 SRC_MAIN = 		main.c
 
 # HEADER

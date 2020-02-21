@@ -5,10 +5,98 @@
 #include <stdio.h>
 #include <fcntl.h>
 
+
 #define RESET   "\033[0m"
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
 #define BUFFER_SIZE 512
+
+void	ft_wait_enter()
+{
+	FILE *fd;
+	char c = 0;
+
+	fd = fdopen(1, "r");
+	while(c != '\n')
+		fscanf(fd, "%c", &c);
+}
+
+int		list_size(t_list *lst)
+{
+	int		count;
+	t_list	*tmp;
+
+	tmp = lst;
+	count = 0;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		count++;
+	}
+	return (count);
+}
+
+void	list_add_back(t_list **alst, t_list *new)
+{
+	t_list	*tmp;
+
+	if (!alst || !new)
+		return ;
+	if (*alst)
+	{
+		tmp = *alst;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+	else
+		*alst = new;
+}
+
+t_list	*list_new(void *data)
+{
+	t_list		*lst;
+
+	if (!(lst = malloc(sizeof(t_list))))
+		return (NULL);
+	lst->data = data;
+	lst->next = NULL;
+	return (lst);
+}
+
+int		list_size_test(int lst_num)
+{
+	t_list	*list;
+
+	list = NULL;
+	while (lst_num--)
+		list_add_back(&list, list_new(&lst_num));
+	if (list_size(list) == ft_list_size(list))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[KO] " RESET "");
+	return (1);
+}
+
+int		list_push_front_test(void *new)
+{
+	t_list	*list;
+
+	list = NULL;
+	list_add_back(&list, list_new("wtf"));
+	list_add_back(&list, list_new("test"));
+	ft_list_push_front(&list, new);
+	if (!new && !list->data)
+	{
+		printf("" GREEN "[OK] " RESET "");
+		return (0);
+	}
+	if (!strcmp(list->data, (char*)new))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[KO] " RESET "");
+	return (1);
+}
 
 void print_list(t_list *list)
 {
@@ -133,9 +221,6 @@ int		strdup_test(char *str)
 int		main(void)
 {
 
-	printf("\033[0;31m\"%s\" \"\"\033[0m : strcmp = \033[0;32m\%d\033[0m and ft_strcmp = \033[0;32m\%d\033[0m\n\n", "test", strcmp("\xff", "\xff\xff"), ft_strcmp("\xff", "\xff\xff"));
-
-
 	printf("\n---------------------------ft_strlen---------------------------\n\n");
 	printf("\033[0;31m\"%s\"\033[0m : strlen = \033[0;32m\%d\033[0m and ft_strlen = \033[0;32m\%d\033[0m\n\n", "test", (int)strlen("test"), (int)ft_strlen("test"));
 	printf("\033[0;31m\"%s\"\033[0m : strlen = \033[0;32m\%d\033[0m and ft_strlen = \033[0;32m\%d\033[0m\n\n", "", (int)strlen(""), (int)ft_strlen(""));
@@ -145,6 +230,7 @@ int		main(void)
 	printf("\033[0;31m\"%s\"\033[0m : strlen = \033[0;32m\%d\033[0m and ft_strlen = \033[0;32m\%d\033[0m\n\n", "       ", (int)strlen("       "), (int)ft_strlen("       "));
 	printf("\n------------------------End of ft_strlen------------------------\n\n\n");
 
+	ft_wait_enter();
 
 	char buf[100];
 	printf("\n---------------------------ft_strcpy---------------------------\n\n");
@@ -155,6 +241,7 @@ int		main(void)
 	printf("\033[0;31m\"%s\"\033[0m : strcpy = \033[0;32m\%s\033[0m and ft_strcpy = \033[0;32m\%s\033[0m\n\n", "    ", strcpy(buf, "    "), ft_strcpy(buf, "    "));
 	printf("\n------------------------End of ft_strcpy------------------------\n\n\n");
 
+	ft_wait_enter();
 
 	printf("\n---------------------------ft_strcmp---------------------------\n\n");
 	printf("\033[0;31m\"%s\" \"%s\"\033[0m : strcmp = \033[0;32m\%d\033[0m and ft_strcmp = \033[0;32m\%d\033[0m\n\n", "test", "test", strcmp("test", "test"), ft_strcmp("test", "test"));
@@ -165,6 +252,8 @@ int		main(void)
 	printf("\033[0;31m\"%s\" \"%s\"\033[0m : strcmp = \033[0;32m\%d\033[0m and ft_strcmp = \033[0;32m\%d\033[0m\n\n", "\xff", "\xff\xfe", strcmp("\xff", "\xff\xfe"), ft_strcmp("\xff", "\xff\xfe"));	
 	printf("\n------------------------End of ft_strcmp------------------------\n\n\n");
 
+	ft_wait_enter();
+
 	printf("\n----------------------------ft_write----------------------------\n\n");
 	printf("\033[0;31mwrite of \"%s\" in fd = 1 and byte = 4\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n\n", "123\\n", write(1, "123\n", 4), ft_write(1, "123\n", 4));	
 	printf(" : \033[0;31mwrite of \"%s\" in fd = 1 and byte = 3\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n\n", "12 ", write(1, "12 ", 3), ft_write(1, "12 ", 3));	
@@ -172,6 +261,8 @@ int		main(void)
 	printf("\033[0;31mwrite of \"%s\" in fd = 42 and byte = 10\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n\n", "abcde", write(42, "abcde", 10), ft_write(42, "abcde", 10));	
 	printf("\033[0;31mwrite of \"%s\" in fd = 1 and byte = 0\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n", "123", write(1, "123", 0), ft_write(1, "123", 0));	
 	printf("\n-------------------------End of ft_write-------------------------\n\n\n");
+
+	ft_wait_enter();
 
 	char bufb[28];
 	int	fd = open("readTest", O_RDONLY);
@@ -196,6 +287,8 @@ int		main(void)
 	printf("\033[0;31mread of 0 in readTest\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%zd\033[0m\n", read(fd, bufb, 0), ft_read(fd, bufb, 0));		
 	printf("\n-------------------------End of ft_read-------------------------\n\n\n");
 
+	ft_wait_enter();
+
 	char *tmp, *ft_tmp;
 	printf("\n----------------------------ft_strdup----------------------------\n\n");
 	printf("\033[0;31m          str = %s\033[0m\n       strdup = %s\nand ft_strdup = %s\n\n", "123456789", tmp = strdup("123456789"), ft_tmp = ft_strdup("123456789"));
@@ -209,9 +302,10 @@ int		main(void)
 	free(ft_tmp);
 	printf("\n-------------------------End of ft_strdup-------------------------\n\n\n\n");
 
+	ft_wait_enter();
 
 
-	printf("" GREEN "\n\n\n\n\n\n\nSolal Dunckel tests for Libasm <3 \n\n\n" RESET "");
+	printf("" GREEN "\n\n\n\n\n\n\nSolal Dunckel tests for Libasm <3 \n\n" RESET "");
 	/*
 	** FT_STRLEN
 	*/
@@ -287,7 +381,7 @@ int		main(void)
 	strdup_test("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, sed pulvinar nullam.");
 	printf("\n\n\n\n\n\n\n\n");
 
-
+	t_list	*ptr;
 	t_list	list;
 	t_list	list_second;
 	t_list	list_third;
@@ -297,7 +391,10 @@ int		main(void)
 	list_second.next = &list_third;
 	list_third.data = strdup("I'm the third....");
 	list_third.next = NULL;
+	ptr = &list;
 	
+	ft_wait_enter();
+
 	printf("\n---------------------------ft_list_size---------------------------\n\n");
 	printf(""RED "The list is :\n" RESET"");
 	print_list(&list);
@@ -305,9 +402,69 @@ int		main(void)
 	printf(""GREEN "from 1 "RESET ", lstSize = %d\n\n", ft_list_size(&list_second));
 	printf(""GREEN "from 2 "RESET ", lstSize = %d\n\n", ft_list_size(&list_third));
 	printf(""GREEN "from NULL pointer "RESET ", lstSize = %d\n", ft_list_size(NULL));
-	free(list_second.data);
-	free(list_third.data);
 	printf("\n-------------------------End of ft_list_size-------------------------\n\n\n");
 
+	ft_wait_enter();
+
+	printf("\n---------------------------ft_list_push_front---------------------------\n\n");
+	printf(""RED "The list is :\n" RESET"");
+	print_list(ptr);
+
+	printf(""GREEN "\nDATA = %s "RESET "", "New one");
+	ft_list_push_front(&ptr, "New one");
+	printf(", the list is now :\n\n");
+	print_list(ptr);
+
+	printf(""GREEN "\nDATA = %s "RESET "", NULL);
+	ft_list_push_front(&ptr, NULL);
+	printf(", the list is now :\n\n");
+	print_list(ptr);
+
+	printf(""GREEN "\nDATA = %s "RESET "", "Test");
+	ft_list_push_front(&ptr, "Test");
+	printf(", the list is now :\n\n");
+	print_list(ptr);
+
+	t_list *nul;
+	nul = NULL;
+	printf(""GREEN "\nSending a NULL pointer and DATA = %s "RESET "", "IO");
+	ft_list_push_front(&nul, "IO");
+	printf(", the list is now :\n\n");
+	print_list(nul);
+
+	free(list.data);	
+	free(list_second.data);
+	free(list_third.data);
+	printf("\n-------------------------End of ft_list_push_front-------------------------\n\n\n");
+	
+	ft_wait_enter();
+
+	printf("" GREEN "\n\n\n\n\n\n\nSolal Dunckel tests for Libasm <3 \n\n" RESET "");
+	/*
+	** FT_LIST_SIZE
+	*/
+	printf("%-16s :  ", "ft_list_size.s");
+	list_size_test(0);
+	list_size_test(8);
+	list_size_test(1);
+	list_size_test(16);
+	printf("\n\n");
+
+	/*
+	** FT_PUSH_FRONT
+	*/
+	printf("%-16s :  ", "ft_push_front.s");
+	list_push_front_test(strdup("aie"));
+	list_push_front_test(strdup(""));
+	list_push_front_test(strdup("POULOULOU"));
+	list_push_front_test(NULL);
+	printf("\n\n\n\n");
+
+	
+	
+	
+	
+	
+	
 	return (0);
 }
