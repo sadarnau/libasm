@@ -1,7 +1,7 @@
 section	.text
-global	_ft_strcmp
+global	ft_strcmp
 
-_ft_strcmp:
+ft_strcmp:
 	mov	rdx, 0					;initialize rdx to 0
 	mov	rcx, 0
 	mov	r8, 0

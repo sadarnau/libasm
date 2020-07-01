@@ -1,9 +1,9 @@
 section	.text
-global	_ft_strcpy
+global	ft_strcpy
 
 ;rdi first arg (dest) and rsi second arg (src)
 
-_ft_strcpy:
+ft_strcpy:
 	mov	rdx, 0					;i = 0;
 	mov	rcx, 0					;tmp buffer
 	cmp	rsi, 0					;check src[0] == 0 ?

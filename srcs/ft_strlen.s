@@ -1,9 +1,9 @@
 section	.text
-global	_ft_strlen
+global	ft_strlen
 
 ;rax = return value
 
-_ft_strlen:
+ft_strlen:
 	mov	rax, 0						;put 0 in rax(the return)
 	jmp	comp						;jump to comparaison
 

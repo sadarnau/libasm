@@ -18,11 +18,11 @@ OBJS_TEST = 	$(SRC_MAIN:%.s=$(OBJS_PATH)%.o)
 # Compilation
 GCC =			gcc
 NASM =			nasm
-AR = 			ar -rc
+AR = 			ar -rcs
 
 # Compilation flags
 GCCFLAGS =		-Werror -Wall -Wextra
-NASM_FLAGS =	-f macho64
+NASM_FLAGS =	-f elf64
 
 
 
@@ -44,7 +44,8 @@ $(OBJS_PATH):
 
 # Creating a testFile
 test:			all $(OBJS_TEST)
-				$(GCC) $(GCCFLAGS) -I $(HEAD_PATH) $(NAME) $(OBJS_TEST) -o test
+				# $(GCC) -I $(HEAD_PATH) $(SRC_MAIN) $(NAME) -o test
+				gcc -no-pie -I includes main.c libasm.a -o test
 
 fclean:	
 				rm -rf $(OBJS_PATH) $(NAME) test

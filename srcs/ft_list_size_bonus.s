@@ -1,7 +1,7 @@
 section	.text
-global	_ft_list_size
+global	ft_list_size
 
-_ft_list_size:
+ft_list_size:
 	mov	rax, 0				;i = 0
 	cmp	rdi, 0				;check *lst == NULL
 	jz	end					; if NULL
