@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <fcntl.h>
+#include <errno.h>
 
 
 #define RESET   "\033[0m"
@@ -258,7 +259,8 @@ int		main(void)
 	printf("\033[0;31mwrite of \"%s\" in fd = 1 and byte = 4\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n\n", "123\\n", write(1, "123\n", 4), ft_write(1, "123\n", 4));	
 	printf(" : \033[0;31mwrite of \"%s\" in fd = 1 and byte = 3\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n\n", "12 ", write(1, "12 ", 3), ft_write(1, "12 ", 3));	
 	printf(" : \033[0;31mwrite of \"%s\" in fd = 1 and byte = 1\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n\n", "123456789", write(1, "123456789", 1), ft_write(1, "123456789", 1));	
-	printf("\033[0;31mwrite of \"%s\" in fd = 42 and byte = 10\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n\n", "abcde", write(42, "abcde", 10), ft_write(42, "abcde", 10));	
+	printf("\033[0;31mwrite of \"%s\" in fd = 42 (wrong fd) and byte = 10\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n\n", "abcde", write(42, "abcde", 10), ft_write(42, "abcde", 10));	
+	printf("strerror = %s, and errno = %d\n\n", strerror(errno), errno);
 	printf("\033[0;31mwrite of \"%s\" in fd = 1 and byte = 0\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n", "123", write(1, "123", 0), ft_write(1, "123", 0));	
 	printf("\n-------------------------End of ft_write-------------------------\n\n\n");
 
@@ -283,6 +285,7 @@ int		main(void)
 	printf("%s\n\n", bufb);
 	close(fd);
 	printf("\033[0;31mread of 10 in fd = 42 (wrong fd)\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%zd\033[0m\n\n", read(42, bufb, 10), ft_read(42, bufb, 10));	
+	printf("strerror = %s, and errno = %d\n\n", strerror(errno), errno);
 	fd = open("readTest", O_RDONLY);
 	printf("\033[0;31mread of 0 in readTest\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%zd\033[0m\n", read(fd, bufb, 0), ft_read(fd, bufb, 0));		
 	printf("\n-------------------------End of ft_read-------------------------\n\n\n");
