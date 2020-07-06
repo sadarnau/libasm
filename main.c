@@ -255,6 +255,7 @@ int		main(void)
 
 	ft_wait_enter();
 
+	errno = 0;
 	printf("\n----------------------------ft_write----------------------------\n\n");
 	printf("\033[0;31mwrite of \"%s\" in fd = 1 and byte = 4\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n\n", "123\\n", write(1, "123\n", 4), ft_write(1, "123\n", 4));	
 	printf(" : \033[0;31mwrite of \"%s\" in fd = 1 and byte = 3\033[0m : write = \033[0;32m\%zd\033[0m and ft_write = \033[0;32m\%zd\033[0m\n\n", "12 ", write(1, "12 ", 3), ft_write(1, "12 ", 3));	
@@ -266,6 +267,7 @@ int		main(void)
 
 	ft_wait_enter();
 
+	errno = 0;
 	char bufb[28];
 	int	fd = open("readTest", O_RDONLY);
 	printf("\n----------------------------ft_read----------------------------\n\n");
@@ -284,7 +286,7 @@ int		main(void)
 	printf("\033[0;31mread of 1000 in readTest\033[0m : ft_read = \033[0;32m\%zd\033[0m\n", ft_read(fd, bufb, 1000));	
 	printf("%s\n\n", bufb);
 	close(fd);
-	printf("\033[0;31mread of 10 in fd = 42 (wrong fd)\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%zd\033[0m\n\n", read(42, bufb, 10), ft_read(42, bufb, 10));	
+	printf("\033[0;31mread of 10 in fd = 42 (wrong fd)\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%zd\033[0m\n\n", ft_read(42, bufb, 10), ft_read(42, bufb, 10));	
 	printf("strerror = %s, and errno = %d\n\n", strerror(errno), errno);
 	fd = open("readTest", O_RDONLY);
 	printf("\033[0;31mread of 0 in readTest\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%zd\033[0m\n", read(fd, bufb, 0), ft_read(fd, bufb, 0));		

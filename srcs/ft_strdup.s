@@ -11,7 +11,7 @@ ft_strdup:					;rdi = str
 	push	rdi				;save rdi
 	inc		rax				;rax = len + 1 for '\0'
 	mov		rdi, rax		;put rax in rdi to call malloc
-	call	malloc			;malloc(rax)
+	call malloc wrt ..plt	;malloc(rax)
 	cmp		rax, 0			;check the malloc
 	jz		error
 	pop		rdi				;take back rdi from stack

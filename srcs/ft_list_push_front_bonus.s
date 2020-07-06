@@ -9,7 +9,7 @@ ft_list_push_front:
 	push rdi				;save rdi...
 	push rsi				;and rsi before malloc call
 	mov rdi, 16				;malloc of 16, size of t_list
-	call malloc
+	call malloc wrt ..plt
 	cmp rax, 0				;checking if malloc failed
 	jz end					;if NULL go to end
 	pop rsi					;and rsi back from the stack

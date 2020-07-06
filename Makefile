@@ -45,7 +45,7 @@ $(OBJS_PATH):
 # Creating a testFile
 test:			all $(OBJS_TEST)
 				# $(GCC) -I $(HEAD_PATH) $(SRC_MAIN) $(NAME) -o test
-				gcc -no-pie -I includes main.c libasm.a -o test
+				gcc -I includes main.c libasm.a -o test
 
 fclean:	
 				rm -rf $(OBJS_PATH) $(NAME) test
