@@ -269,26 +269,26 @@ int		main(void)
 
 	errno = 0;
 	char bufb[28];
-	int	fd = open("readTest", O_RDONLY);
+	int	fd = open("testing/readTest", O_RDONLY);
 	printf("\n----------------------------ft_read----------------------------\n\n");
 	printf("\033[0;31mread of 6 in readTest\033[0m : read = \033[0;32m\%zd\033[0m\n", read(fd, bufb, 6));	
 	printf("%s\n", bufb);
 	close(fd);
-	fd = open("readTest", O_RDONLY);
+	fd = open("testing/readTest", O_RDONLY);
 	printf("\033[0;31mread of 6 in readTest\033[0m : ft_read = \033[0;32m\%zd\033[0m\n", ft_read(fd, bufb, 6));	
 	printf("%s\n\n", bufb);
 	close(fd);
-	fd = open("readTest", O_RDONLY);
+	fd = open("testing/readTest", O_RDONLY);
 	printf("\033[0;31mread of 1000 in readTest\033[0m : read = \033[0;32m\%zd\033[0m\n", read(fd, bufb, 1000));	
 	printf("%s\n", bufb);
 	close(fd);
-	fd = open("readTest", O_RDONLY);
+	fd = open("testing/readTest", O_RDONLY);
 	printf("\033[0;31mread of 1000 in readTest\033[0m : ft_read = \033[0;32m\%zd\033[0m\n", ft_read(fd, bufb, 1000));	
 	printf("%s\n\n", bufb);
 	close(fd);
-	printf("\033[0;31mread of 10 in fd = 42 (wrong fd)\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%zd\033[0m\n\n", ft_read(42, bufb, 10), ft_read(42, bufb, 10));	
+	printf("\033[0;31mread of 10 in fd = 42 (wrong fd)\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%zd\033[0m\n\n", read(42, bufb, 10), ft_read(42, bufb, 10));	
 	printf("strerror = %s, and errno = %d\n\n", strerror(errno), errno);
-	fd = open("readTest", O_RDONLY);
+	fd = open("testing/readTest", O_RDONLY);
 	printf("\033[0;31mread of 0 in readTest\033[0m : read = \033[0;32m\%zd\033[0m and ft_read = \033[0;32m\%zd\033[0m\n", read(fd, bufb, 0), ft_read(fd, bufb, 0));		
 	printf("\n-------------------------End of ft_read-------------------------\n\n\n");
 
